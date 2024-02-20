@@ -57,7 +57,7 @@ def repuplate():
         sample_tracker = Tracker(name="Test Tracker", keyName="testKey", color="red", project_id=1)
         db.session.add(sample_tracker)
 
-        sample_user = User(name="Test User", email="test@test.test")
+        sample_user = User(name="Test User", email="ethan.baumgartner@roche.com")
         db.session.add(sample_user)
 
         sample_status = Status(name="Test Status", type="Test Type")
