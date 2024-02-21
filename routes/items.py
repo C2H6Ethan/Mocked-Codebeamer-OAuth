@@ -57,7 +57,8 @@ def query_items():
             "customFields": [{"type": customField.type, "value": customField.value} for customField in item.customFields],
             "status": {"id": item.status.id, "name": item.status.name, "type": item.status.type},
             "storyPoints": item.storyPoints,
-            "teams": [{"id": team.id, "name": team.name, "type": team.type} for team in item.teams]
+            "teams": [{"id": team.id, "name": team.name, "type": team.type} for team in item.teams],
+            "version": 1
         }
         for item in items
     ]
