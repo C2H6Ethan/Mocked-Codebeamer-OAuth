@@ -72,9 +72,11 @@ def repopulate():
         sample_status = Status(name="Test Status", type="Test Type")
         db.session.add(sample_status)
 
-        sample_item_1 =  Item(name="Test Item 1", description="Test Description", descriptionFormat="Wiki", storyPoints=5, tracker_id=1, status=[sample_status], assignedTo=[sample_user_1])
+        sample_team_value = CodebeamerEntityReference(id=542154, name="Rainbow", type="TrackerItemReference")
+
+        sample_item_1 =  Item(name="Test Item 1", description="Test Description", descriptionFormat="Wiki", storyPoints=5, tracker_id=1, status=[sample_status], assignedTo=[sample_user_1], teams=[sample_team_value])
         db.session.add(sample_item_1)
-        sample_item_2 =  Item(name="Test Item 2", description="Test Description", descriptionFormat="Wiki", storyPoints=5, tracker_id=1, status=[sample_status], assignedTo=[sample_user_1])
+        sample_item_2 =  Item(name="Test Item 2", description="Test Description", descriptionFormat="Wiki", storyPoints=5, tracker_id=1, status=[sample_status], assignedTo=[sample_user_1], teams=[sample_team_value])
         db.session.add(sample_item_2)
 
         sample_name_field_1 = Field(name="name", type="Test Type", trackerId=1, itemId=1)
@@ -95,7 +97,6 @@ def repopulate():
         db.session.add(sample_assigned_to_field_1)
         db.session.add(sample_assigned_to_field_2)
 
-        sample_team_value = CodebeamerEntityReference(id=542154, name="Rainbow", type="TrackerItemReference")
         db.session.add(sample_team_value)
         sample_team_field_1 = Field(name="teams", type="ChoiceFieldValue", trackerId=1, itemId=1, values=[sample_team_value])
         sample_team_field_2 = Field(name="teams", type="ChoiceFieldValue", trackerId=1, itemId=2, values=[sample_team_value])
