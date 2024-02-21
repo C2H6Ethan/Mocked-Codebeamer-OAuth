@@ -140,7 +140,6 @@ def update_item_fields(id):
         if 'value' in field and field['value']:
             setattr(item, field['name'], field['value'])
         elif 'values' in field:
-            print(field['values'])
             # go trough list of values and and get each user with 'id' and then set item assignedTo to that user
             users = []
             for value in field['values']:
