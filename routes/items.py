@@ -18,7 +18,8 @@ def get_item(id):
         "tracker" : {"id": item.tracker.id, "name": item.tracker.name},
         "customFields": [{"type": customField.type, "value": customField.value} for customField in item.customFields],
         "status": [{"id": status.id, "name": status.name, "type": status.type} for status in item.status],
-        "storyPoints": item.storyPoints
+        "storyPoints": item.storyPoints,
+        "teams": [{"id": team.id, "name": team.name, "type": team.type} for team in item.teams]
     })
 
 @item_bp.route('/query', methods=['POST'])
