@@ -1,6 +1,7 @@
 import os
 from flask import Flask
 from flask_cors import CORS
+from sqlalchemy import inspect
 from routes.authorization import auth_bp
 from routes.projects import project_bp
 from routes.trackers import tracker_bp
@@ -41,9 +42,11 @@ app.register_blueprint(user_bp, url_prefix='/cb/api/v3/users')
 def reset():
     meta = db.metadata
     for table in reversed(meta.sorted_tables):
-        db.session.execute(table.delete())
-    db.session.commit()
+        inspector = inspect(db.engine)
+        if table.name in inspector.get_table_names():
+            db.session.execute(table.delete())
 
+    db.session.commit()
     repopulate()
 
     return "Database reset and repopulated"
