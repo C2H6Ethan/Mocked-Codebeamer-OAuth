@@ -113,7 +113,21 @@ def item_relations(id):
 @validate_authorization
 def get_item_fields(id):
     fields = Field.query.filter_by(itemId=id).all()
-    return jsonify({ "editableFields": [{"fieldId": field.id, "name": field.name, "type": field.type, "values": field.values} for field in fields]})
+    return jsonify({
+    "editableFields": [
+        {
+            "fieldId": field.id,
+            "name": field.name,
+            "type": field.type,
+            "values": [
+                {"id": value.id, "name": value.name, "email": value.email}
+                for value in field.values
+            ],
+        }
+        for field in fields
+    ]
+})
+
 
 @item_bp.route('/<int:id>/fields', methods=['PUT'])
 @validate_authorization
