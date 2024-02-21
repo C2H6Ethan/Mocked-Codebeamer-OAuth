@@ -87,6 +87,11 @@ def repuplate():
         db.session.add(sample_story_points_field_1)
         db.session.add(sample_story_points_field_2)
 
+        sample_assigned_to_field_1 = Field(name="assignedTo", type="ChoiceFieldValue", trackerId=1, itemId=1)
+        sample_assigned_to_field_2 = Field(name="assignedTo", type="ChoiceFieldValue", trackerId=1, itemId=2)
+        db.session.add(sample_assigned_to_field_1)
+        db.session.add(sample_assigned_to_field_2)
+
         sample_association_from = CodebeamerEntityReference(name="Test Item 1")
         db.session.add(sample_association_from)
         sample_association_to = CodebeamerEntityReference(name="Test Item 2")

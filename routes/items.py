@@ -1,6 +1,6 @@
 from flask import Blueprint, request, jsonify
 from routes.authorization import validate_authorization
-from models import Item, Tracker, Association, db, Field
+from models import Item, Tracker, Association, User, db, Field
 import re
 
 item_bp = Blueprint('items', __name__)
@@ -123,7 +123,16 @@ def update_item_fields(id):
     fieldValues = payload.get('fieldValues')
 
     for field in fieldValues:
-        setattr(item, field['name'], field['value'])
+        if field['value']:
+            setattr(item, field['name'], field['value'])
+        elif field['values']:
+            # go trough list of values and and get each user with 'id' and then set item assignedTo to that user
+            users = []
+            for value in field['values']:
+                user = User.query.get_or_404(value['id'])
+                users.append(user)
+
+            setattr(item, field['assignedTo'], users)
     
 
     db.session.commit()
