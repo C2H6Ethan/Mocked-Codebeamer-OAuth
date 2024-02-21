@@ -120,7 +120,7 @@ def get_item_fields(id):
             "name": field.name,
             "type": field.type,
             "values": [
-                {"id": value.id, "name": value.name, "email": value.email}
+                {"id": value.id, "name": value.name, "type": value.type}
                 for value in field.values
             ],
         }

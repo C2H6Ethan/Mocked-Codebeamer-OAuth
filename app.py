@@ -60,7 +60,9 @@ def repuplate():
         db.session.add(sample_tracker)
 
         sample_user_1 = User(name="baumgae5", email="ethan.baumgartner@roche.com")
+        user_value = CodebeamerEntityReference(name="baumgae5", type="UserReference")
         db.session.add(sample_user_1)
+        db.session.add(user_value)
         sample_user_2 = User(name="test1", email="test1@test.test")
         db.session.add(sample_user_2)
         sample_user_3 = User(name="test2", email="test2@test.test")
@@ -87,10 +89,18 @@ def repuplate():
         db.session.add(sample_story_points_field_1)
         db.session.add(sample_story_points_field_2)
 
-        sample_assigned_to_field_1 = Field(name="assignedTo", type="ChoiceFieldValue", trackerId=1, itemId=1, values=[sample_user_1])
-        sample_assigned_to_field_2 = Field(name="assignedTo", type="ChoiceFieldValue", trackerId=1, itemId=2, values=[sample_user_1])
+        sample_assigned_to_field_1 = Field(name="assignedTo", type="ChoiceFieldValue", trackerId=1, itemId=1, values=[user_value])
+        sample_assigned_to_field_2 = Field(name="assignedTo", type="ChoiceFieldValue", trackerId=1, itemId=2, values=[user_value])
         db.session.add(sample_assigned_to_field_1)
         db.session.add(sample_assigned_to_field_2)
+
+        sample_team_value = CodebeamerEntityReference(id=542154, name="Rainbow", type="TrackerItemReference")
+        db.session.add(sample_team_value)
+        sample_team_field_1 = Field(name="teams", type="ChoiceFieldValue", trackerId=1, itemId=1, values=[sample_team_value])
+        sample_team_field_2 = Field(name="teams", type="ChoiceFieldValue", trackerId=1, itemId=2, values=[sample_team_value])
+        db.session.add(sample_team_field_1)
+        db.session.add(sample_team_field_2)
+
 
         sample_association_from = CodebeamerEntityReference(name="Test Item 1")
         db.session.add(sample_association_from)

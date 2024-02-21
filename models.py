@@ -30,10 +30,9 @@ item_status_table = db.Table('item_status',
     db.Column('status_id', db.Integer, db.ForeignKey('status.id'), primary_key=True)
 )
 
-
-field_user_table = db.Table('field_value',
+field_cer_table = db.Table('field_cer',
     db.Column('field_id', db.Integer, db.ForeignKey('field.id'), primary_key=True),
-    db.Column('user_id', db.Integer, db.ForeignKey('user.id'), primary_key=True)
+    db.Column('cer_id', db.Integer, db.ForeignKey('codebeamer_entity_reference.id'), primary_key=True)
 )
 
 class User(db.Model):
@@ -68,7 +67,9 @@ class Field(db.Model):
     type = db.Column(db.String(255), nullable=False)
     trackerId = db.Column(db.Integer, nullable=False)
     itemId = db.Column(db.Integer, nullable=True)
-    values = db.relationship('User', secondary=field_user_table, backref='fields')
+    values = db.relationship('CodebeamerEntityReference', secondary=field_cer_table, backref='fields')
+
+   
 
 
 # Relations & Associations
@@ -76,7 +77,8 @@ class CodebeamerEntityReference(db.Model):
     __tablename__ = 'codebeamer_entity_reference'
 
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(255), nullable=False)    
+    name = db.Column(db.String(255), nullable=False)  
+    type = db.Column(db.String(255), nullable=True)  
 class Association(db.Model):
     __tablename__ = 'association'
 
@@ -89,6 +91,7 @@ class Association(db.Model):
     type = db.relationship('CodebeamerEntityReference', foreign_keys=[type_id])
     from_entity = db.relationship('CodebeamerEntityReference', foreign_keys=[from_id])
     to_entity = db.relationship('CodebeamerEntityReference', foreign_keys=[to_id])
+
 
 
     
