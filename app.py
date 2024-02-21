@@ -41,13 +41,13 @@ app.register_blueprint(user_bp, url_prefix='/cb/api/v3/users')
 # create a route that removes all db data and repulates
 @app.route('/reset')
 def reset():
-    # meta = db.metadata
-    # for table in reversed(meta.sorted_tables):
-    #     inspector = inspect(db.engine)
-    #     if table.name in inspector.get_table_names():
-    #         db.session.execute(table.delete())
+    meta = db.metadata
+    for table in reversed(meta.sorted_tables):
+        inspector = inspect(db.engine)
+        if table.name in inspector.get_table_names():
+            db.session.execute(table.delete())
 
-    # db.session.commit()
+    db.session.commit()
     repopulate()
 
     return "Database reset and repopulated"
