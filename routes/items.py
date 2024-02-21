@@ -17,7 +17,7 @@ def get_item(id):
         "assignedTo": [{"id": user.id, "name": user.name, "email": user.email} for user in item.assignedTo],
         "tracker" : {"id": item.tracker.id, "name": item.tracker.name},
         "customFields": [{"type": customField.type, "value": customField.value} for customField in item.customFields],
-        "status": [{"id": status.id, "name": status.name, "type": status.type} for status in item.status],
+        "status": {"id": item.status.id, "name": item.status.name, "type": item.status.type},
         "storyPoints": item.storyPoints,
         "teams": [{"id": team.id, "name": team.name, "type": team.type} for team in item.teams],
         "version": 1

@@ -25,11 +25,6 @@ item_custom_field_table = db.Table('item_custom_field',
     db.Column('custom_field_type', db.String(255), db.ForeignKey('custom_field.type'), primary_key=True)
 )
 
-item_status_table = db.Table('item_status',
-    db.Column('item_id', db.Integer, db.ForeignKey('item.id'), primary_key=True),
-    db.Column('status_id', db.Integer, db.ForeignKey('status.id'), primary_key=True)
-)
-
 field_cer_table = db.Table('field_cer',
     db.Column('field_id', db.Integer, db.ForeignKey('field.id'), primary_key=True),
     db.Column('cer_id', db.Integer, db.ForeignKey('codebeamer_entity_reference.id'), primary_key=True)
@@ -63,7 +58,8 @@ class Item(db.Model):
     tracker_id = db.Column(db.Integer, db.ForeignKey('tracker.id'))
     tracker = db.relationship('Tracker', foreign_keys=[tracker_id])
     customFields = db.relationship('CustomField', secondary=item_custom_field_table, backref='items')
-    status = db.relationship('Status', secondary=item_status_table, backref='items')
+    status_id = db.Column(db.Integer, db.ForeignKey('status.id'))
+    status = db.relationship('Status', foreign_keys=[status_id])
     storyPoints = db.Column(db.Integer, nullable=True)
     teams = db.relationship('CodebeamerEntityReference', secondary=item_cer_table, backref='items')
 

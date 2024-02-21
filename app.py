@@ -41,13 +41,13 @@ app.register_blueprint(user_bp, url_prefix='/cb/api/v3/users')
 # create a route that removes all db data and repulates
 @app.route('/reset')
 def reset():
-    meta = db.metadata
-    for table in reversed(meta.sorted_tables):
-        inspector = inspect(db.engine)
-        if table.name in inspector.get_table_names():
-            db.session.execute(table.delete())
+    # meta = db.metadata
+    # for table in reversed(meta.sorted_tables):
+    #     inspector = inspect(db.engine)
+    #     if table.name in inspector.get_table_names():
+    #         db.session.execute(table.delete())
 
-    db.session.commit()
+    # db.session.commit()
     repopulate()
 
     return "Database reset and repopulated"
@@ -78,9 +78,9 @@ def repopulate():
 
         sample_team_value = CodebeamerEntityReference(id=542154, name="Rainbow", type="TrackerItemReference")
 
-        sample_item_1 =  Item(name="Test Item 1", description="Test Description", descriptionFormat="Wiki", storyPoints=5, tracker_id=1, status=[sample_status], assignedTo=[sample_user_1], teams=[sample_team_value])
+        sample_item_1 =  Item(name="Test Item 1", description="Test Description", descriptionFormat="Wiki", storyPoints=5, tracker_id=1, status_id=1, assignedTo=[sample_user_1], teams=[sample_team_value])
         db.session.add(sample_item_1)
-        sample_item_2 =  Item(name="Test Item 2", description="Test Description", descriptionFormat="Wiki", storyPoints=5, tracker_id=1, status=[sample_status], assignedTo=[sample_user_1], teams=[sample_team_value])
+        sample_item_2 =  Item(name="Test Item 2", description="Test Description", descriptionFormat="Wiki", storyPoints=5, tracker_id=1, status_id=1, assignedTo=[sample_user_1], teams=[sample_team_value])
         db.session.add(sample_item_2)
 
         sample_name_field_1 = Field(name="name", type="Test Type", trackerId=1, itemId=1)
