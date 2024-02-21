@@ -137,9 +137,9 @@ def update_item_fields(id):
     fieldValues = payload.get('fieldValues')
 
     for field in fieldValues:
-        if field['value']:
+        if 'value' in field and field['value']:
             setattr(item, field['name'], field['value'])
-        elif field['values']:
+        elif 'values' in field and field['values']:
             # go trough list of values and and get each user with 'id' and then set item assignedTo to that user
             users = []
             for value in field['values']:
