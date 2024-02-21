@@ -30,6 +30,12 @@ item_status_table = db.Table('item_status',
     db.Column('status_id', db.Integer, db.ForeignKey('status.id'), primary_key=True)
 )
 
+
+field_user_table = db.Table('field_value',
+    db.Column('field_id', db.Integer, db.ForeignKey('field.id'), primary_key=True),
+    db.Column('user_id', db.Integer, db.ForeignKey('user.id'), primary_key=True)
+)
+
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(255), nullable=False)
@@ -62,6 +68,8 @@ class Field(db.Model):
     type = db.Column(db.String(255), nullable=False)
     trackerId = db.Column(db.Integer, nullable=False)
     itemId = db.Column(db.Integer, nullable=True)
+    values = db.relationship('Users', secondary=field_user_table, backref='fields')
+
 
 # Relations & Associations
 class CodebeamerEntityReference(db.Model):

@@ -87,8 +87,8 @@ def repuplate():
         db.session.add(sample_story_points_field_1)
         db.session.add(sample_story_points_field_2)
 
-        sample_assigned_to_field_1 = Field(name="assignedTo", type="ChoiceFieldValue", trackerId=1, itemId=1)
-        sample_assigned_to_field_2 = Field(name="assignedTo", type="ChoiceFieldValue", trackerId=1, itemId=2)
+        sample_assigned_to_field_1 = Field(name="assignedTo", type="ChoiceFieldValue", trackerId=1, itemId=1, values=[sample_user_1])
+        sample_assigned_to_field_2 = Field(name="assignedTo", type="ChoiceFieldValue", trackerId=1, itemId=2, values=[sample_user_1])
         db.session.add(sample_assigned_to_field_1)
         db.session.add(sample_assigned_to_field_2)
 

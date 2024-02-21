@@ -113,7 +113,7 @@ def item_relations(id):
 @validate_authorization
 def get_item_fields(id):
     fields = Field.query.filter_by(itemId=id).all()
-    return jsonify({ "editableFields": [{"fieldId": field.id, "name": field.name, "type": field.type} for field in fields]})
+    return jsonify({ "editableFields": [{"fieldId": field.id, "name": field.name, "type": field.type, "values": field.values} for field in fields]})
 
 @item_bp.route('/<int:id>/fields', methods=['PUT'])
 @validate_authorization
@@ -131,8 +131,10 @@ def update_item_fields(id):
             for value in field['values']:
                 user = User.query.get_or_404(value['id'])
                 users.append(user)
-
             setattr(item, field['assignedTo'], users)
+            fields = Field.query.filter_by(itemId=id, name="assignedTo").all()
+            for field in fields:
+                setattr(item, 'values', users)
     
 
     db.session.commit()
