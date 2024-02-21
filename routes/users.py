@@ -20,3 +20,26 @@ def find_user_by_name():
         return jsonify({
             "error": "User not found"
         }), 404
+
+@user_bp.route('/search', methods=['POST'])
+@validate_authorization
+def search_users():
+    payload = request.get_json()
+    name = payload.get('name')
+    users = User.query.filter_by(name=name).all()
+    user_data = [
+        {
+            "id": user.id,
+            "name": user.name,
+            "email": user.email
+        }
+        for user in users
+    ]
+
+    return_data = {
+        "page": 1,
+        "pageSize": 13,
+        "total": len(user_data),
+        "users": user_data
+    }
+    return jsonify(return_data)
