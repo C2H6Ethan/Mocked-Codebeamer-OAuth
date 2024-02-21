@@ -68,7 +68,7 @@ class Field(db.Model):
     type = db.Column(db.String(255), nullable=False)
     trackerId = db.Column(db.Integer, nullable=False)
     itemId = db.Column(db.Integer, nullable=True)
-    values = db.relationship('Users', secondary=field_user_table, backref='fields')
+    values = db.relationship('User', secondary=field_user_table, backref='fields')
 
 
 # Relations & Associations
