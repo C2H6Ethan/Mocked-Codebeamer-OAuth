@@ -140,15 +140,19 @@ def update_item_fields(id):
         if 'value' in field and field['value']:
             setattr(item, field['name'], field['value'])
         elif 'values' in field:
+            print(field['values'])
             # go trough list of values and and get each user with 'id' and then set item assignedTo to that user
             users = []
             for value in field['values']:
                 user = User.query.get_or_404(value['id'])
                 users.append(user)
-            setattr(item, field['assignedTo'], users)
+            setattr(item, 'assignedTo', users)
             fields = Field.query.filter_by(itemId=id, name="assignedTo").all()
             for field in fields:
-                setattr(item, 'values', users)
+                # if the field has the values list, update it
+                if field.values:
+                    field.values = users
+
     
 
     db.session.commit()
