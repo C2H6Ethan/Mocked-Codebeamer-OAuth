@@ -19,7 +19,8 @@ def get_item(id):
         "customFields": [{"type": customField.type, "value": customField.value} for customField in item.customFields],
         "status": [{"id": status.id, "name": status.name, "type": status.type} for status in item.status],
         "storyPoints": item.storyPoints,
-        "teams": [{"id": team.id, "name": team.name, "type": team.type} for team in item.teams]
+        "teams": [{"id": team.id, "name": team.name, "type": team.type} for team in item.teams],
+        "version": 1
     })
 
 @item_bp.route('/query', methods=['POST'])
