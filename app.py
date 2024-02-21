@@ -6,6 +6,7 @@ from routes.projects import project_bp
 from routes.trackers import tracker_bp
 from routes.items import item_bp
 from routes.associations import association_bp
+from routes.users import user_bp
 from models import db, Project, Tracker, Item, User, Status, Association, CodebeamerEntityReference, Field
 
 app = Flask(__name__)
@@ -25,6 +26,7 @@ app.register_blueprint(project_bp, url_prefix='/cb/api/v3/projects')
 app.register_blueprint(tracker_bp, url_prefix='/cb/api/v3/trackers')
 app.register_blueprint(item_bp, url_prefix='/cb/api/v3/items')
 app.register_blueprint(association_bp, url_prefix='/cb/api/v3/associations')
+app.register_blueprint(user_bp, url_prefix='/cb/api/v3/users')
 
 # @app.after_request
 # def after_request(response):
@@ -57,7 +59,7 @@ def repuplate():
         sample_tracker = Tracker(name="Test Tracker", keyName="testKey", color="red", project_id=1)
         db.session.add(sample_tracker)
 
-        sample_user = User(name="Test User", email="ethan.baumgartner@roche.com")
+        sample_user = User(name="baumgae5", email="ethan.baumgartner@roche.com")
         db.session.add(sample_user)
 
         sample_status = Status(name="Test Status", type="Test Type")
