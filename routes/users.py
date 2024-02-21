@@ -26,7 +26,13 @@ def find_user_by_name():
 def search_users():
     payload = request.get_json()
     name = payload.get('name')
-    users = User.query.filter_by(name=name).all()
+    
+    if name is None:
+        users = User.query.all()
+    else: 
+        users = User.query.filter_by(name=name).all()
+
+        
     user_data = [
         {
             "id": user.id,

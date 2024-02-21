@@ -59,15 +59,19 @@ def repuplate():
         sample_tracker = Tracker(name="Test Tracker", keyName="testKey", color="red", project_id=1)
         db.session.add(sample_tracker)
 
-        sample_user = User(name="baumgae5", email="ethan.baumgartner@roche.com")
-        db.session.add(sample_user)
+        sample_user_1 = User(name="baumgae5", email="ethan.baumgartner@roche.com")
+        db.session.add(sample_user_1)
+        sample_user_2 = User(name="test1", email="test1@test.test")
+        db.session.add(sample_user_2)
+        sample_user_3 = User(name="test2", email="test2@test.test")
+        db.session.add(sample_user_3)
 
         sample_status = Status(name="Test Status", type="Test Type")
         db.session.add(sample_status)
 
-        sample_item_1 =  Item(name="Test Item 1", description="Test Description", descriptionFormat="Wiki", storyPoints=5, tracker_id=1, status=[sample_status], assignedTo=[sample_user])
+        sample_item_1 =  Item(name="Test Item 1", description="Test Description", descriptionFormat="Wiki", storyPoints=5, tracker_id=1, status=[sample_status], assignedTo=[sample_user_1])
         db.session.add(sample_item_1)
-        sample_item_2 =  Item(name="Test Item 2", description="Test Description", descriptionFormat="Wiki", storyPoints=5, tracker_id=1, status=[sample_status], assignedTo=[sample_user])
+        sample_item_2 =  Item(name="Test Item 2", description="Test Description", descriptionFormat="Wiki", storyPoints=5, tracker_id=1, status=[sample_status], assignedTo=[sample_user_1])
         db.session.add(sample_item_2)
 
         sample_name_field_1 = Field(name="name", type="Test Type", trackerId=1, itemId=1)
