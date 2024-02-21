@@ -14,6 +14,7 @@ app = Flask(__name__)
 app.url_map.strict_slashes = False
 
 # if Database_URL is set replace "postgres://" with "postgresql://" and if not set use sqlite
+app.config['SQLALCHEMY_ENGINE_OPTIONS'] = {"pool_pre_ping": True}  
 if os.environ.get('DATABASE_URL'):
     app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL').replace("postgres://", "postgresql://")
 else:
