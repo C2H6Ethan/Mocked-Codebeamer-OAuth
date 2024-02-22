@@ -147,23 +147,24 @@ def update_item_fields(id):
             # go trough list of values and and get each user with 'id' and then set item assignedTo to that user
             dataToSet = []
             fieldsToSet = []
-            for value in field['values']:
-                if value['type'] == 'UserReference':
+            for userValue in field['values']:
+                if userValue['type'] == 'UserReference':
                     # assignedTo change
-                    user = User.query.get_or_404(value['id'])
+                    user = User.query.get_or_404(userValue['id'])
                     dataToSet.append(user)
-                    entity_reference = CodebeamerEntityReference.query.get(value['id'])
+                    entity_reference = CodebeamerEntityReference.query.get(userValue['id'])
                     fieldsToSet.append(entity_reference)
 
 
             setattr(item, field['name'], dataToSet)
 
-            # update field
+           # update field
             field_instance = Field.query.filter_by(itemId=id, name=field['name']).first()
             # Access the values attribute to get associated CodebeamerEntityReference instances
-            codebeamer_entity_references = field_instance.values
+            field_instance.values = fieldsToSet
 
-            codebeamer_entity_references[:] = fieldsToSet
+           
+                            
 
     
 
