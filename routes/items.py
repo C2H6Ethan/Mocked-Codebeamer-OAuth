@@ -152,7 +152,7 @@ def update_item_fields(id):
                     # assignedTo change
                     user = User.query.get_or_404(value['id'])
                     dataToSet.append(user)
-                    entity_reference = CodebeamerEntityReference(id=value['id'], name=user.name, type=value['type'])
+                    entity_reference = CodebeamerEntityReference.query.get(value['id'])
                     fieldsToSet.append(entity_reference)
 
 
