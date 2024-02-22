@@ -44,7 +44,13 @@ def query_items():
 
         items = Item.query.filter(Item.id.in_(itemIds), Item.tracker_id == trackerId).all()
     else:
-        items = Item.query.filter_by(tracker_id=trackerId).all()
+        # get the string in this AND Summary LIKE '%' and then get the value in the quotes before the %
+        summary_match = re.search(r'AND\s+Summary\s+LIKE\s+\'%(.+)%\'', queryString)
+        if summary_match:
+            summary = summary_match.group(1)
+            items = Item.query.filter(Item.name.like(summary), Item.tracker_id == trackerId).all()
+        else:
+          items = Item.query.filter_by(tracker_id=trackerId).all()
 
     item_data = [
         {
