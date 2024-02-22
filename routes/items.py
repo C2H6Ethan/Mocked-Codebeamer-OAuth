@@ -1,6 +1,6 @@
 from flask import Blueprint, request, jsonify
 from routes.authorization import validate_authorization
-from models import Item, Tracker, Association, User, db, Field
+from models import CodebeamerEntityReference, Item, Tracker, Association, User, db, Field
 import re
 
 item_bp = Blueprint('items', __name__)
@@ -145,16 +145,25 @@ def update_item_fields(id):
             setattr(item, field['name'], field['value'])
         elif 'values' in field:
             # go trough list of values and and get each user with 'id' and then set item assignedTo to that user
-            users = []
+            dataToSet = []
+            fieldsToSet = []
             for value in field['values']:
-                user = User.query.get_or_404(value['id'])
-                users.append(user)
-            setattr(item, 'assignedTo', users)
-            fields = Field.query.filter_by(itemId=id, name="assignedTo").all()
-            for field in fields:
-                # if the field has the values list, update it
-                if field.values:
-                    field.values = users
+                if value['type'] == 'UserReference':
+                    # assignedTo change
+                    user = User.query.get_or_404(value['id'])
+                    dataToSet.append(user)
+                    entity_reference = CodebeamerEntityReference(id=value['id'], name=user.name, type=value['type'])
+                    fieldsToSet.append(entity_reference)
+
+
+            setattr(item, field['name'], dataToSet)
+
+            # update field
+            field_instance = Field.query.filter_by(itemId=id, name=field['name']).first()
+            # Access the values attribute to get associated CodebeamerEntityReference instances
+            codebeamer_entity_references = field_instance.values
+
+            codebeamer_entity_references[:] = fieldsToSet
 
     
 
