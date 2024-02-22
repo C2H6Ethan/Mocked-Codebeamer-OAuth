@@ -20,7 +20,8 @@ def get_item(id):
         "status": {"id": item.status.id, "name": item.status.name, "type": item.status.type},
         "storyPoints": item.storyPoints,
         "teams": [{"id": team.id, "name": team.name, "type": team.type} for team in item.teams],
-        "version": 1
+        "version": 1,
+        "owners": [{"id": owner.id, "name": owner.name, "email": owner.email} for owner in item.owners]
     })
 
 @item_bp.route('/query', methods=['POST'])
@@ -63,7 +64,8 @@ def query_items():
             "status": {"id": item.status.id, "name": item.status.name, "type": item.status.type},
             "storyPoints": item.storyPoints,
             "teams": [{"id": team.id, "name": team.name, "type": team.type} for team in item.teams],
-            "version": 1
+            "version": 1,
+            "owners": [{"id": owner.id, "name": owner.name, "email": owner.email} for owner in item.owners]
         }
         for item in items
     ]

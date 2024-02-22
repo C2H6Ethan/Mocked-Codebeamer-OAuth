@@ -35,6 +35,11 @@ item_cer_table = db.Table('item_cer',
     db.Column('cer_id', db.Integer, db.ForeignKey('codebeamer_entity_reference.id'), primary_key=True)
 )
 
+item_owners_table = db.Table('item_owners',
+    db.Column('item_id', db.Integer, db.ForeignKey('item.id'), primary_key=True),
+    db.Column('user_id', db.Integer, db.ForeignKey('user.id'), primary_key=True)
+)
+
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(255), nullable=False)
@@ -62,6 +67,7 @@ class Item(db.Model):
     status = db.relationship('Status', foreign_keys=[status_id])
     storyPoints = db.Column(db.Integer, nullable=True)
     teams = db.relationship('CodebeamerEntityReference', secondary=item_cer_table, backref='items')
+    owners = db.relationship('User', secondary=item_owners_table, backref='items')
 
 class Field(db.Model):
     id = db.Column(db.Integer, primary_key=True)
