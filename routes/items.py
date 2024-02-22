@@ -47,7 +47,7 @@ def query_items():
         summary_match = re.search(r"Summary LIKE '(.*?)'", queryString)
         if summary_match:
             summary = summary_match.group(1)
-            items = Item.query.filter(Item.name.like(summary), Item.tracker_id == trackerId).all()
+            items = Item.query.filter(Item.name.ilike(summary), Item.tracker_id == trackerId).all()
         else:
           items = Item.query.filter_by(tracker_id=trackerId).all()
 
