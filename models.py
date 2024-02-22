@@ -59,7 +59,7 @@ class Item(db.Model):
     name = db.Column(db.String(255), nullable=False)
     description = db.Column(db.String(255), nullable=True)
     descriptionFormat = db.Column(db.String(255), nullable=True)
-    assignedTo = db.relationship('User', secondary=item_assigned_to_table, backref='items')
+    assignedTo = db.relationship('User', secondary=item_assigned_to_table, backref='item_assignees')
     tracker_id = db.Column(db.Integer, db.ForeignKey('tracker.id'))
     tracker = db.relationship('Tracker', foreign_keys=[tracker_id])
     customFields = db.relationship('CustomField', secondary=item_custom_field_table, backref='items')
@@ -67,7 +67,7 @@ class Item(db.Model):
     status = db.relationship('Status', foreign_keys=[status_id])
     storyPoints = db.Column(db.Integer, nullable=True)
     teams = db.relationship('CodebeamerEntityReference', secondary=item_cer_table, backref='items')
-    owners = db.relationship('User', secondary=item_owners_table, backref='items')
+    owners = db.relationship('User', secondary=item_owners_table, backref='item_owners')
 
 class Field(db.Model):
     id = db.Column(db.Integer, primary_key=True)
