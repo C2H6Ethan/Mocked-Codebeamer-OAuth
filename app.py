@@ -66,6 +66,8 @@ def repopulate():
 
         sample_tracker = Tracker(name="Test Tracker", keyName="testKey", color="red", project_id=1)
         db.session.add(sample_tracker)
+        team_tracker = Tracker(id=3313417, name="Teams", keyName="TEAM", color="blue", project_id=1)
+        db.session.add(team_tracker)
 
         sample_user_1 = User(name="baumgae5", email="ethan.baumgartner@roche.com")
         user_value_1 = CodebeamerEntityReference(name="baumgae5", type="UserReference")
@@ -92,6 +94,8 @@ def repopulate():
         db.session.add(sample_item_2)
         sample_item_3 =  Item(name="Test Item 3", description="Test Description", descriptionFormat="Wiki", storyPoints=2, tracker_id=1, status_id=1, assignedTo=[sample_user_2, sample_user_3], teams=[sample_team_value])
         db.session.add(sample_item_3)
+        team_item = Item(id=542154, name="Rainbow", description="Test Description", descriptionFormat="Wiki", tracker_id=3313417, status_id=1, assignedTo=[], teams=[])
+        db.session.add(team_item)
 
         sample_name_field_1 = Field(name="name", type="Test Type", trackerId=1, itemId=1)
         sample_name_field_2 = Field(name="name", type="Test Type", trackerId=1, itemId=2)

@@ -1,4 +1,4 @@
-from flask import Blueprint, jsonify
+from flask import Blueprint, jsonify, request
 from routes.authorization import validate_authorization
 from models import Project, Tracker
 
@@ -33,4 +33,19 @@ def trackers(id):
     ]
 
     return jsonify(trackers_data)
+
+@project_bp.route('/<int:id>/trackers/search', methods=['POST'])
+@validate_authorization
+def search_trackers(id):
+    # mock team tracker search
+    
+
+    trackers_data = [
+        {
+            'id': 3313417,
+            'name': "Teams",
+        }
+    ]
+
+    return jsonify({"trackers": trackers_data})
 

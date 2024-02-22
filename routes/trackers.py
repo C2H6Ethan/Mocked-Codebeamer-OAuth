@@ -18,6 +18,20 @@ def tracker(id):
         'color': tracker.color,
     })
 
+@tracker_bp.route('/<int:id>/items', methods=['GET'])
+@validate_authorization
+def items(id):
+    tracker = Tracker.query.get_or_404(id)
+    items = Item.query.filter_by(tracker_id=tracker.id).all()
+    items_data = [
+        {
+            "id": item.id,
+            "name": item.name,
+        }
+        for item in items
+    ]
+    return jsonify({"page": 1, "pageSize": 13, "total": len(items_data), "items": items_data})
+
 @tracker_bp.route('/<int:id>/schema', methods=['GET'])
 @validate_authorization
 def trackerSchema(id):
