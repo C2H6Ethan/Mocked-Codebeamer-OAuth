@@ -47,5 +47,5 @@ def search_trackers(id):
         }
     ]
 
-    return jsonify({"trackers": trackers_data})
+    return jsonify({"page": 1, "pageSize": 13, "total": len(trackers_data), "trackers": trackers_data})
 
