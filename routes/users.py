@@ -5,6 +5,21 @@ import re
 
 user_bp = Blueprint('users', __name__)
 
+@user_bp.route('/<int:id>', methods=['GET'])
+@validate_authorization
+def get_user(id):
+    user = User.query.filter_by(id=id).first()
+    if user:
+        return jsonify({
+            "id": user.id,
+            "name": user.name,
+            "email": user.email
+        })
+    else:
+        return jsonify({
+            "error": "User not found"
+        }), 404
+
 @user_bp.route('/findByName', methods=['GET'])
 @validate_authorization
 def find_user_by_name():
