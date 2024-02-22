@@ -1,7 +1,7 @@
 import os
 from flask import Flask
 from flask_cors import CORS
-from sqlalchemy import inspect
+from sqlalchemy import MetaData, inspect
 from routes.authorization import auth_bp
 from routes.projects import project_bp
 from routes.trackers import tracker_bp
@@ -41,13 +41,16 @@ app.register_blueprint(user_bp, url_prefix='/cb/api/v3/users')
 # create a route that removes all db data and repulates
 @app.route('/reset')
 def reset():
-    meta = db.metadata
-    for table in reversed(meta.sorted_tables):
-        inspector = inspect(db.engine)
-        if table.name in inspector.get_table_names():
-            db.session.execute(table.delete())
+    # Create a new metadata instance
+    meta = MetaData()
 
-    db.session.commit()
+    # Reflect all existing tables
+    meta.reflect(bind=db.engine)
+
+    # Drop all tables
+    meta.drop_all(bind=db.engine)
+
+    # Recreate the tables and repopulate
     repopulate()
 
     return "Database reset and repopulated"
@@ -77,6 +80,7 @@ def repopulate():
         db.session.add(sample_status)
 
         sample_team_value = CodebeamerEntityReference(id=542154, name="Rainbow", type="TrackerItemReference")
+        db.session.add(sample_team_value)
 
         sample_item_1 =  Item(name="Test Item 1", description="Test Description", descriptionFormat="Wiki", storyPoints=5, tracker_id=1, status_id=1, assignedTo=[sample_user_1], teams=[sample_team_value])
         db.session.add(sample_item_1)
@@ -101,7 +105,6 @@ def repopulate():
         db.session.add(sample_assigned_to_field_1)
         db.session.add(sample_assigned_to_field_2)
 
-        db.session.add(sample_team_value)
         sample_team_field_1 = Field(name="teams", type="ChoiceFieldValue", trackerId=1, itemId=1, values=[sample_team_value])
         sample_team_field_2 = Field(name="teams", type="ChoiceFieldValue", trackerId=1, itemId=2, values=[sample_team_value])
         db.session.add(sample_team_field_1)
