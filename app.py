@@ -90,7 +90,7 @@ def repopulate():
         db.session.add(sample_item_1)
         sample_item_2 =  Item(name="Test Item 2", description="Test Description", descriptionFormat="Wiki", storyPoints=5, tracker_id=1, status_id=1, assignedTo=[sample_user_1], teams=[sample_team_value])
         db.session.add(sample_item_2)
-        sample_item_3 =  Item(name="Test Item 3", description="Test Description", descriptionFormat="Wiki", storyPoints=2, tracker_id=1, status_id=1, assignedTo=[sample_user_2], teams=[sample_team_value])
+        sample_item_3 =  Item(name="Test Item 3", description="Test Description", descriptionFormat="Wiki", storyPoints=2, tracker_id=1, status_id=1, assignedTo=[sample_user_2, sample_user_3], teams=[sample_team_value])
         db.session.add(sample_item_3)
 
         sample_name_field_1 = Field(name="name", type="Test Type", trackerId=1, itemId=1)
