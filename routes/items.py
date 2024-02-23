@@ -166,6 +166,18 @@ def update_item_fields(id):
                     team = CodebeamerEntityReference.query.get_or_404(fieldValue['id'])
                     dataToSet.append(team)
                     fieldsToSet.append(team)
+                elif fieldValue['type'] == 'ChoiceOptionReference':
+                    # status change
+                    status = CodebeamerEntityReference.query.get_or_404(fieldValue['id'])
+                    if field['name'] == 'Test Status"' or field['name'] == 'No Errors Status':
+                        dataToSet.append(status)
+                        fieldsToSet.append(status)
+                    else:
+                        #error status
+                        return jsonify({
+                            "message": "Mandatory \"Deployment Impact Analysis\" value is missing<br/>Mandatory \"Implementation / UI/UX Design\" value is missing<br/>Mandatory \"Risks & Testing Approach\" value is missing<br/>Mandatory \"Test Case Expected\" value is missing",
+                            "resourceUri": "/items/2085053/fields"
+                        }), 400
 
 
             setattr(item, field['name'], dataToSet)
