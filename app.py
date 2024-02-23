@@ -8,7 +8,7 @@ from routes.trackers import tracker_bp
 from routes.items import item_bp
 from routes.associations import association_bp
 from routes.users import user_bp
-from models import db, Project, Tracker, Item, User, Status, Association, CodebeamerEntityReference, Field
+from models import db, Project, Tracker, Item, User, Status, Association, CodebeamerEntityReference, Field, Transition
 
 app = Flask(__name__)
 app.url_map.strict_slashes = False
@@ -82,8 +82,21 @@ def repopulate():
         db.session.add(sample_user_3)
         db.session.add(user_value_3)
 
-        sample_status = Status(name="Test Status", type="Test Type")
+        sample_status = Status(name="Test Status", type="ChoiceOptionReference")
         db.session.add(sample_status)
+        error_status = Status(name="Error Status", type="ChoiceOptionReference")
+        db.session.add(error_status)
+        no_error_tracker = Status(name="No Errors Status", type="ChoiceOptionReference")
+        db.session.add(no_error_tracker)
+
+        test_error_transition = Transition(name="Error Transition", from_status_id=1, to_status_id=2)
+        db.session.add(test_error_transition)
+        test_no_error_transition = Transition(name="No Error Transition", from_status_id=1, to_status_id=3)
+        db.session.add(test_no_error_transition)
+        error_test_transition = Transition(name="← go back", from_status_id=2, to_status_id=1)
+        db.session.add(error_test_transition)
+        no_error_test_transition = Transition(name="← go back", from_status_id=3, to_status_id=1)
+        db.session.add(no_error_test_transition)
 
         sample_team_value = CodebeamerEntityReference(id=542154, name="Rainbow", type="TrackerItemReference")
         sample_team_value_2 = CodebeamerEntityReference(id=542153, name="Edelweiss", type="TrackerItemReference")

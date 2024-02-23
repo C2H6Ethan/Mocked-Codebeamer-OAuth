@@ -1,6 +1,6 @@
 from flask import Blueprint, request, jsonify
 from routes.authorization import validate_authorization
-from models import CodebeamerEntityReference, Item, Tracker, Association, User, db, Field
+from models import CodebeamerEntityReference, Item, Tracker, Association, Transition, User, db, Field
 import re
 
 item_bp = Blueprint('items', __name__)
@@ -182,3 +182,30 @@ def update_item_fields(id):
 
     db.session.commit()
     return jsonify({"message": "Item fields updated successfully"})
+
+@item_bp.route('/<int:id>/transitions', methods=['GET'])
+@validate_authorization
+def get_item_transitions(id):
+    item = Item.query.get_or_404(id)
+    # get transition that have from_status_id = item.status_id
+    transitions = Transition.query.filter_by(from_status_id=item.status_id).all()
+    # for each transition get to_status_id and then get status with that id
+    transitions_data = [
+        {
+            "id": transition.id,
+            "name": transition.name,
+            "fromStatus": {
+                "id": transition.from_status.id,
+                "name": transition.from_status.name,
+                "type": transition.from_status.type
+            },
+            "toStatus": {
+                "id": transition.to_status.id,
+                "name": transition.to_status.name,
+                "type": transition.to_status.type
+            }
+        }
+        for transition in transitions
+    ]
+
+    return jsonify(transitions_data)

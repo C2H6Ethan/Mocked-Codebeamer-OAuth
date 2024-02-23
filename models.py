@@ -54,6 +54,16 @@ class Status(db.Model):
     name = db.Column(db.String(255), nullable=False)
     type = db.Column(db.String(255), nullable=False)
 
+class Transition(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(255))
+
+    from_status_id = db.Column(db.Integer, db.ForeignKey('status.id'))
+    to_status_id = db.Column(db.Integer, db.ForeignKey('status.id'))
+
+    from_status = relationship('Status', foreign_keys=[from_status_id], backref='transitions_from')
+    to_status = relationship('Status', foreign_keys=[to_status_id], backref='transitions_to')
+
 class Item(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(255), nullable=False)
