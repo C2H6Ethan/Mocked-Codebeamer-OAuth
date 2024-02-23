@@ -95,13 +95,13 @@ def repopulate():
         no_error_status_value = CodebeamerEntityReference(id=52, name="No Errors Status", type="ChoiceOptionReference")
         db.session.add(no_error_status_value)
 
-        test_error_transition = Transition(name="Error Transition", from_status_id=1, to_status_id=2)
+        test_error_transition = Transition(name="Error Transition", from_status_id=50, to_status_id=52)
         db.session.add(test_error_transition)
-        test_no_error_transition = Transition(name="No Error Transition", from_status_id=1, to_status_id=3)
+        test_no_error_transition = Transition(name="No Error Transition", from_status_id=50, to_status_id=53)
         db.session.add(test_no_error_transition)
-        error_test_transition = Transition(name="← go back", from_status_id=2, to_status_id=1)
+        error_test_transition = Transition(name="← go back", from_status_id=52, to_status_id=51)
         db.session.add(error_test_transition)
-        no_error_test_transition = Transition(name="← go back", from_status_id=3, to_status_id=1)
+        no_error_test_transition = Transition(name="← go back", from_status_id=53, to_status_id=51)
         db.session.add(no_error_test_transition)
 
 
