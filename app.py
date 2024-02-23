@@ -98,6 +98,8 @@ def repopulate():
         no_error_test_transition = Transition(name="← go back", from_status_id=3, to_status_id=1)
         db.session.add(no_error_test_transition)
 
+        
+
         sample_team_value = CodebeamerEntityReference(id=542154, name="Rainbow", type="TrackerItemReference")
         sample_team_value_2 = CodebeamerEntityReference(id=542153, name="Edelweiss", type="TrackerItemReference")
         db.session.add(sample_team_value)
