@@ -64,9 +64,9 @@ def repopulate():
         sample_project = Project(name="Test Project")
         db.session.add(sample_project)
 
-        sample_tracker = Tracker(name="Test Tracker", keyName="testKey", color="red", project_id=1)
+        sample_tracker = Tracker(name="Test Tracker", keyName="testKey", color="#007AC2", project_id=1)
         db.session.add(sample_tracker)
-        team_tracker = Tracker(id=3313417, name="Teams", keyName="TEAM", color="blue", project_id=1)
+        team_tracker = Tracker(id=3313417, name="Teams", keyName="TEAM", color="#702963", project_id=1)
         db.session.add(team_tracker)
 
         sample_user_1 = User(name="baumgae5", email="ethan.baumgartner@roche.com")
