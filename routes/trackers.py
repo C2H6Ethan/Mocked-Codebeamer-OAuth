@@ -2,7 +2,7 @@ import base64
 import json
 from flask import Blueprint, jsonify, request
 from routes.authorization import validate_authorization
-from models import Item, Status, Tracker, User, Field
+from models import Item, Project, Status, Tracker, User, Field
 from models import db
 
 tracker_bp = Blueprint('trackers', __name__)
@@ -16,6 +16,7 @@ def tracker(id):
         'name': tracker.name,
         'keyName': tracker.keyName,
         'color': tracker.color,
+        'project': {'id': tracker.project.id, 'name': tracker.project.name}
     })
 
 @tracker_bp.route('/<int:id>/items', methods=['GET'])
@@ -104,7 +105,6 @@ def fields(id):
 @validate_authorization
 def field(id, field_id):
     tracker = Tracker.query.get_or_404(id)
-    # get field by filtering for both id and tracker id
     field = Field.query.filter_by(id=field_id, trackerId=tracker.id).first() 
 
 
