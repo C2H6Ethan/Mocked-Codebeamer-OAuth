@@ -78,31 +78,10 @@ def create_item(id):
     if not name:
         return jsonify({'error': 'name is required'}), 400
 
-    auth_header = request.headers.get('Authorization')
-    token = auth_header.split(' ')[1]
 
-    tokenPayload = token.split('.')[1]
-    padded = tokenPayload + '=' * (4 - len(tokenPayload) % 4)
-    decoded_padded = base64.b64decode(padded)
-    decoded_token = json.loads(decoded_padded)
-
-    user_email = decoded_token['email']
-    user_name = decoded_token['name']
-
-    # check if user exists in db if not create user
-    user = User.query.filter_by(email=user_email).first()
-    if user:
-        user_value = CodebeamerEntityReference.query.filter_by(id=user.id).first()
-    else:
-        user = User(name=user_name, email=user_email)
-        db.session.add(user)
-        user_value = CodebeamerEntityReference(id=user.id, name=user.name, type="UserReference")
-        db.session.add(user_value)
-        db.session.commit()
-    
     description = payload.get('description')
 
-    item = Item(name=name, description=description, descriptionFormat="Wiki", tracker_id=tracker.id, status_id=status.id, assignedTo=[user])
+    item = Item(name=name, description=description, descriptionFormat="Wiki", tracker_id=tracker.id, status_id=status.id)
     db.session.add(item)
     db.session.commit()
 
