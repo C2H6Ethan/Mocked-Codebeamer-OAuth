@@ -99,6 +99,8 @@ def create_item(id):
         "description": item.description,
         "descriptionFormat": item.descriptionFormat,
         "assignedTo": [],
+        "teams": [],
+        "owners": [],
         "tracker" : {"id": item.tracker.id, "name": item.tracker.name},
         "customFields": [{"type": customField.type, "value": customField.value} for customField in item.customFields],
         "status": {"id": status.id, "name": status.name, "type": status.type},
