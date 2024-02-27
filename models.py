@@ -73,7 +73,7 @@ class Item(db.Model):
     tracker_id = db.Column(db.Integer, db.ForeignKey('tracker.id'))
     tracker = db.relationship('Tracker', foreign_keys=[tracker_id])
     customFields = db.relationship('CustomField', secondary=item_custom_field_table, backref='items')
-    status_id = db.Column(db.Integer, db.ForeignKey('status.id'))
+    status_id = db.Column(db.Integer, db.ForeignKey('status.id'), nullable=True)
     status = db.relationship('Status', foreign_keys=[status_id])
     storyPoints = db.Column(db.Integer, nullable=True)
     teams = db.relationship('CodebeamerEntityReference', secondary=item_cer_table, backref='items')
