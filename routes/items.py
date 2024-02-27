@@ -146,20 +146,39 @@ def update_item_fields(id):
     item = Item.query.get_or_404(id)
     payload = request.get_json()
     fieldValues = payload.get('fieldValues')
+    print(fieldValues)
 
     for field in fieldValues:
+        fieldName = field['name']
+        dataToSet = []
+        fieldsToSet = []
         if 'value' in field and field['value']:
-            setattr(item, field['name'], field['value'])
+            if fieldName == 'Story Points':
+                fieldName = 'storyPoints'
+            elif fieldName == 'Summary':
+                fieldName = 'name'
+            elif fieldName == 'Description':
+                fieldName = 'description'
+
+            dataToSet.append(field['value'])
+            fieldsToSet.append(field['value'])
         elif 'values' in field:
+            if fieldName == 'Assigned To':
+                fieldName = 'assignedTo'
+            elif fieldName == 'Teams':
+                fieldName = 'teams'
+            elif fieldName == 'Status':
+                fieldName = 'status'
+            elif fieldName == 'Owner':
+                fieldName = 'owners'
             # go trough list of values and and get each user with 'id' and then set item assignedTo to that user
-            dataToSet = []
-            fieldsToSet = []
             for fieldValue in field['values']:
                 if fieldValue['type'] == 'UserReference':
                     # assignedTo change
                     user = User.query.get_or_404(fieldValue['id'])
                     dataToSet.append(user)
                     entity_reference = CodebeamerEntityReference.query.get(fieldValue['id'])
+                    print(entity_reference.name)
                     fieldsToSet.append(entity_reference)
                 elif fieldValue['type'] == 'TrackerItemReference':
                     # teams change
@@ -180,12 +199,14 @@ def update_item_fields(id):
                         }), 400
 
 
-            setattr(item, field['name'], dataToSet)
+        setattr(item, fieldName, dataToSet)
 
-           # update field
-            field_instance = Field.query.filter_by(itemId=id, name=field['name']).first()
-            # Access the values attribute to get associated CodebeamerEntityReference instances
-            field_instance.values = fieldsToSet
+        # update field
+        field_instance = Field.query.filter_by(itemId=id, name=field['name']).first()
+        if 'value' in field:
+            setattr(field_instance, 'value', fieldsToSet)
+        elif 'values' in field: 
+            setattr(field_instance, 'values', fieldsToSet)
 
            
                             
