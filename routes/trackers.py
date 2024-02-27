@@ -89,8 +89,6 @@ def create_item(id):
     db.session.add(summary_field)
     description_field = Field(name="Description", type="TextFieldValue", trackerId=id, itemId=item.id)
     db.session.add(description_field)
-    assignedto_field = Field(name="Assigned To", type="UserReference", trackerId=id, itemId=item.id, values=[user_value])
-    db.session.add(assignedto_field)
     status_field = Field(name="Status", type="ChoiceOptionReference", trackerId=id, itemId=item.id, values=[status_value])
     db.session.add(status_field)
 
@@ -100,7 +98,7 @@ def create_item(id):
         "name": item.name,
         "description": item.description,
         "descriptionFormat": item.descriptionFormat,
-        "assignedTo": [{"id": user.id, "name": user.name, "email": user.email} for user in item.assignedTo],
+        "assignedTo": [],
         "tracker" : {"id": item.tracker.id, "name": item.tracker.name},
         "customFields": [{"type": customField.type, "value": customField.value} for customField in item.customFields],
         "status": {"id": status.id, "name": status.name, "type": status.type},
