@@ -22,7 +22,12 @@ else:
 
 db.init_app(app)
 
-
+CORS(auth_bp)
+CORS(project_bp)
+CORS(tracker_bp)
+CORS(item_bp)
+CORS(association_bp)
+CORS(user_bp)
 app.register_blueprint(auth_bp, url_prefix='/auth',)
 app.register_blueprint(project_bp, url_prefix='/cb/api/v3/projects')
 app.register_blueprint(tracker_bp, url_prefix='/cb/api/v3/trackers')
