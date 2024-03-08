@@ -146,6 +146,7 @@ def update_item_fields(id):
     item = Item.query.get_or_404(id)
     payload = request.get_json()
     fieldValues = payload.get('fieldValues')
+    print(fieldValues)
 
     for field in fieldValues:
         fieldName = field['name']
@@ -182,6 +183,7 @@ def update_item_fields(id):
                 elif fieldValue['type'] == 'TrackerItemReference':
                     # teams change
                     team = CodebeamerEntityReference.query.get_or_404(fieldValue['id'])
+                    print(team.name)
                     dataToSet.append(team)
                     fieldsToSet.append(team)
                 elif fieldValue['type'] == 'ChoiceOptionReference':

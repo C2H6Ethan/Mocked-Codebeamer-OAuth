@@ -181,7 +181,7 @@ def repopulate():
 
         db.session.commit()
 
-        sample_association = Association(description="Test Description", from_id=1, to_id=2, type_id=3)
+        sample_association = Association(description="Test Description", from_id=sample_item_1.id, to_id=sample_item_2.id, type_id=sample_association_type.id)
         db.session.add(sample_association)
         
         db.session.commit()
