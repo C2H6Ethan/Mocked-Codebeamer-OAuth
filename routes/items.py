@@ -146,7 +146,6 @@ def update_item_fields(id):
     item = Item.query.get_or_404(id)
     payload = request.get_json()
     fieldValues = payload.get('fieldValues')
-    print(fieldValues)
 
     for field in fieldValues:
         fieldName = field['name']
@@ -160,8 +159,8 @@ def update_item_fields(id):
             elif fieldName == 'Description':
                 fieldName = 'description'
 
-            dataToSet.append(field['value'])
-            fieldsToSet.append(field['value'])
+            dataToSet = field['value']
+            fieldsToSet = field['value']
         elif 'values' in field:
             if fieldName == 'Assigned To':
                 fieldName = 'assignedTo'
@@ -197,7 +196,6 @@ def update_item_fields(id):
                             "message": "Mandatory \"Deployment Impact Analysis\" value is missing<br/>Mandatory \"Implementation / UI/UX Design\" value is missing<br/>Mandatory \"Risks & Testing Approach\" value is missing<br/>Mandatory \"Test Case Expected\" value is missing",
                             "resourceUri": "/items/2085053/fields"
                         }), 400
-
 
         setattr(item, fieldName, dataToSet)
 
